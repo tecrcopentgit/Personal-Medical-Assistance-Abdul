@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "start": "node userM_server.js",
+    "start": "node src/NodeSection/userM_server.js",
     "lint": "eslint",
     "preview": "vite preview"
   },
