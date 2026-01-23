@@ -25,7 +25,7 @@ function handleComp(navRef){
     }
 
     return <div className=" grid lg:grid-cols-3 sm:grid-cols-1 bg-slate-800/20  bg-[url('./src/assets/img/medBg.jpg')] bg-cover bg-blend-overlay bg-center gap-10">
-{buildupTools.map((tool , i ) =><div key={i} className='p-5 bg-gradient-to-br from-blue-700 m-4 to-slate-600 rounded gap-10'>
+{buildupTools.map((tool , i ) =><div key={i} className='p-5 bg-gradient-to-br from-cyan-700 m-4 to-slate-600 rounded gap-10'>
                 <img src={tool.imgRef} className='rounded h-50 w-fit' />
                 <h1 className='text-xl font-head'><strong className='text-2xl text-red-600'>|</strong>{tool.sectionName}</h1>
                 <p className='font-body'>{tool.desc}</p>

@@ -1,21 +1,23 @@
-
-
-const randColArr = [`red` , `amber` , `stone` , `blue`];
-
-var randNum = Math.floor(Math.random() * 4);
+import NavigationSection from "../components/NavigationSection";
 
 
 
-
-const randCol = randColArr[randNum];
-export const cssClassOfMedDocRep = `bg-gradient-to-br from-green-700/50 via-amber-300/30 to-${randColArr}-900/60 w-full h-screen`;
 
 
 export default function MedSection(){
 
     return (
-        <div className={cssClassOfMedDocRep}>
+        <>
+        <NavigationSection/>
+        <div >
+          <div>
+            
+            <div className='bg-yellow-950/20 m-44 text-center'>
 
+            <h2 className='p-24'>There is no medicine here and no Medicine you have to intake...</h2>
+            </div>
+        </div>
         </ div >
+        </>
     )
 }

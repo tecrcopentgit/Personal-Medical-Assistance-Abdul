@@ -12,7 +12,7 @@ import BodyComp from './components/BodyComp.jsx';
 import MedSection from './contentSection/MedSection.jsx';
 import ReportSection from './contentSection/ReportSection.jsx';
 import DoctorField from './contentSection/DoctorField.jsx';
-import NavigationSection from './components/NavigationSection.jsx';
+
 
 
 
@@ -49,11 +49,15 @@ cssClass;
             </Routes>
         </Router>
         <footer className='bg-gradient-to-tr from-purple-800/50 to-cyan-500/20 p-2 text-center text-xl flex flex-col justify-center items-center'>
-        <div className='bg-emerald-900/20 w-fit p-10  rounded'>
- <h1><strong>ABDUL</strong>&copy;Personal Med Assistance&trade;</h1>
+         <h1><strong>ABDUL</strong>&copy;Personal Med Assistance&trade;</h1>
+         
+         <div className='bg-emerald-900/20 w-fit p-10  rounded'>
+<span className='underline'>MedCOPENT </span>&trade;
     <div className='bg-slate-600/50 w-fit p-2'><strong>ABDUL HAADHI | NARASHIMA RAJA | MOHAMED HARUN| MOHAMED RAZIM</strong></div>
+
+    
         </div>
-   
+   <h1 className='font-thin'>web application in devolopment..!</h1>
         </footer>
       </div>
       
