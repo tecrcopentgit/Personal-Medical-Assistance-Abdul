@@ -38,7 +38,7 @@ async function handleSubmit(e){
    
         e.preventDefault();
 
-        const res = await fetch ('http://localhost:1230/login',{method:"POST",headers:{"Content-Type":"application/json"} ,body:JSON.stringify(loginForm)});
+        const res = await fetch ('https://personal-medical-assistance-abdul.onrender.com/login',{method:"POST",headers:{"Content-Type":"application/json"} ,body:JSON.stringify(loginForm)});
         const data = await res.json();
 
         

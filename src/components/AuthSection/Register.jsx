@@ -31,7 +31,7 @@ export default function Register(){
         
         try{
 
-const res = await fetch(`http://localhost:1230/register` ,{method:"POST" ,headers:{"Content-Type":"application/json"} ,body:JSON.stringify(userForm)}  )
+const res = await fetch(`https://personal-medical-assistance-abdul.onrender.com/register` ,{method:"POST" ,headers:{"Content-Type":"application/json"} ,body:JSON.stringify(userForm)}  )
          const result = await res.json();
          console.log('the form is '+result.user);
          localStorage.setItem('result' ,result.user);
