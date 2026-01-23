@@ -48,7 +48,7 @@ cssClass;
                 <Route path="/doctor" element={<DoctorField/>}/>
             </Routes>
         </Router>
-        <footer className='bg-gradient-to-tr from-purple-800/50 to-cyan-500/20 p-2 text-center text-xl flex flex-col justify-center items-center'>
+        <footer className='bg-gradient-to-br from-purple-800/60 to-stone-800/80 p-2 text-center text-xl flex flex-col justify-center items-center'>
          <h1><strong>ABDUL</strong>&copy;Personal Med Assistance&trade;</h1>
          
          <div className='bg-emerald-900/20 w-fit p-10  rounded'>

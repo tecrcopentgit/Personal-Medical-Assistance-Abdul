@@ -40,6 +40,11 @@ async function handleSubmit(e){
 
         const res = await fetch ('https://personal-medical-assistance-abdul.onrender.com/login',{method:"POST",headers:{"Content-Type":"application/json"} ,body:JSON.stringify(loginForm)});
         const data = await res.json();
+        const dataUser = JSON.stringify(data.user);
+    
+        localStorage.setItem('data' , dataUser);
+        
+        
 
         
 localStorage.setItem("userName" , data.username)
@@ -52,9 +57,9 @@ localStorage.setItem("userName" , data.username)
 
         else{
             
-           localStorage.setItem("token", data.token);
+          
            
-           localStorage.setItem("userId", data.id);
+          
            
            
            

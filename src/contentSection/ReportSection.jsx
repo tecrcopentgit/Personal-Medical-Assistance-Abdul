@@ -13,7 +13,7 @@ export default function ReportSection(){
         <div>
            <div>
             
-            <div className='bg-yellow-950/20 m-44 text-center'>
+            <div className='bg-yellow-950/20 m-5 lg:m-20 text-center'>
 
             <h2 className='p-24'>There is no Report here and no Reports you have to Observe...</h2>
             </div>
