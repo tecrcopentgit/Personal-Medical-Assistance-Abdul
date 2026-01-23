@@ -1,0 +1,265 @@
+<p>
+
+https://chatgpt.com/share/6899faa5-6244-8008-8112-17e7b48ba9db
+MVP feature list (prioritized)
+1. Secure user sign-up / sign-in (email/phone + optional 2FA).
+2. Upload & store medical reports (PDF, images) + basic metadata (type, date, provider).
+3. In-app viewer for PDFs/images and text-search on metadata.
+4. Create reminders:
+○ Routine tests (one-time or recurring: e.g., every 6 months).
+○ Daily pill schedules (multiple times per day with dose info).
+5. Notifications (local & push) for reminders.
+6. Basic search & filters (by date, type, medication).
+7. Export / share report (PDF) and settings (for doctor).
+8. Audit trail & activity log (when reports added/edited, reminders triggered).
+Tech stack (recommended)
+● Mobile: React Native (Expo) or Flutter (cross-platform).
+● Web portal: React.
+● Backend: Node.js + Express or FastAPI (Python).
+● DB: PostgreSQL for structured data.
+● Object storage: S3 or compatible (for reports).
+● Queue/scheduler: Redis + BullMQ (Node) or Celery + Redis (Python).
+● Push notifications: FCM (Android) + APNs (iOS).
+● OCR (optional): Tesseract (on-prem) or Google Cloud Vision / AWS Textract.
+● Auth: OAuth2 / JWT; integrate with Auth0, Firebase Auth, or your own with secure
+password policies.
+● Deployment: Docker + Kubernetes / managed services (Heroku, Render, AWS ECS).
+Data model (core tables / collections)
+Below are simplified SQL-ish schemas.
+Users
+diff
+CopyEdit
+users
+- id (uuid, pk)
+- email
+- phone
+- password_hash
+- name
+- timezone (string, e.g., "Asia/Kolkata")
+- created_at, updated_at
+Reports
+scss
+CopyEdit
+reports
+- id (uuid, pk)
+- user_id (fk)
+- title (e.g., "Chest X-ray", "Blood Sugar Report")
+- type (enum: diagnostic, prescription, referral, other)
+- provider (string)
+- date_of_report (date)
+- notes (text)
+- storage_url (string -> S3 path)
+- file_type (pdf, image)
+- ocr_text (text, nullable) -- for search
+- tags (jsonb array) -- ["diabetes", "lab"]
+- created_at, updated_at
+Medications
+diff
+CopyEdit
+medications
+- id (uuid)
+- user_id
+- name
+- form (tablet, syrup)
+- strength (e.g., "500 mg")
+- instructions (text)
+- created_at
+PillSchedules (represents dosing rules)
+scss
+CopyEdit
+pill_schedules
+- id (uuid)
+- user_id
+- medication_id
+- start_date (date)
+- end_date (date, nullable)
+- timezone
+- recurrence_rule (json) -- e.g.,
+{"type":"daily","times":["08:00","20:00"],"weekdays":[1,2,3,4,5,6,7]}
+- dose_amount (string e.g., "1 tablet")
+- notes
+- active (bool)
+RoutineReminders (tests etc)
+diff
+CopyEdit
+routine_reminders
+- id
+- user_id
+- title
+- description
+- start_date
+- recurrence_rule (json) -- e.g., {"type":"months","interval":6}
+- next_occurrence (timestamp) -- for fast lookup
+- active (bool)
+Notifications / Logs
+diff
+CopyEdit
+notifications
+- id
+- user_id
+- reminder_id (nullable)
+- type (push, email, local)
+- payload (json)
+- status (sent, failed, delivered)
+- sent_at
+Representing recurrence rules
+(recommendation)
+Use a compact JSON structure or RFC 5545 (iCal) rrule. Example simple JSON patterns:
+Daily meds:
+json
+CopyEdit
+{
+"type": "daily",
+"times": ["08:00", "13:00", "21:00"], // local times in user's
+timezone
+"interval": 1
+}
+Weekly:
+json
+CopyEdit
+{"type":"weekly","weekdays":[1,3,5],"times":["09:00"]}
+Monthly/interval:
+json
+CopyEdit
+{"type":"months","interval":6, "day":15, "time":"09:00"}
+One-time:
+json
+CopyEdit
+{"type":"once","datetime":"2025-09-01T09:00:00+05:30"}
+Using a library to evaluate recurrences is suggested: rrule (JS) or dateutil.rrule
+(Python).
+Reminder scheduler design (high-level)
+1. When user creates a reminder, compute the next occurrence(s) in their timezone and
+store next_occurrence.
+2. Use a job queue (BullMQ / Celery) with a worker that polls upcoming reminders
+(next_occurrence within X minutes) or use scheduled jobs per reminder.
+3. When a reminder is due:
+○ Push notification (FCM/APNs) to device(s).
+○ If user is offline, fall back to email/SMS if enabled.
+○ Mark notification record and compute & persist the reminder's next occurrence
+(increment per recurrence rule).
+4. Guarantee at-least-once delivery (idempotent handling): each notification has a unique
+ID and the client should dedupe.
+Sample pseudocode (Python-like) for computing next_occurrence using dateutil:
+python
+CopyEdit
+from dateutil.rrule import rrule, DAILY, WEEKLY, MONTHLY
+def next_occurrence_for_rule(rule_json, after_dt, user_tz):
+# translate rule_json -> rrule params
+# return next occurrence as timezone-aware datetime
+(Use robust libraries for DST and timezone correctness — always store times in UTC internally
+but compute recurrence in user timezone.)
+Notifications — mobile & local
+● Local notifications: schedule on-device for daily pill reminders (works offline). Use
+platform local notification library (React Native: expo-notifications or
+react-native-push-notification). Local is best for repeat daily meds (less
+backend dependency).
+● Push notifications: use push tokens to send reminders from server for cross-device sync
+and for routine tests. Use FCM + APNs with a server component to send payloads.
+Include deep link to open the app and show the report/reminder.
+API endpoints (concise)
+bash
+CopyEdit
+POST /auth/register
+POST /auth/login
+GET /user/profile
+PUT /user/profile
+POST /reports (multipart: file + metadata)
+GET /reports?type=&tag=&q=&from=&to=
+GET /reports/{id}
+DELETE /reports/{id}
+POST /medications
+GET /medications
+PUT /medications/{id}
+DELETE /medications/{id}
+POST /pill-schedules
+GET /pill-schedules
+PUT /pill-schedules/{id}
+DELETE /pill-schedules/{id}
+POST /routine-reminders
+GET /routine-reminders
+Sample report JSON (one record)
+json
+CopyEdit
+{
+"id": "uuid-123",
+"title": "CBC Report",
+"type": "diagnostic",
+"provider": "City Lab",
+"date_of_report": "2025-07-18",
+"storage_url": "s3://bucket/userid/report.pdf",
+"ocr_text": "Hemoglobin: 13.2 g/dL ...",
+"tags": ["blood","cbc"]
+}
+Example pill schedule JSON
+json
+CopyEdit
+{
+"id":"ps-01",
+"medication_id":"med-01",
+"start_date":"2025-08-10",
+"recurrence_rule":{"type":"daily","times":["08:00","20:00"]},
+"dose_amount":"1 tablet",
+"timezone":"Asia/Kolkata",
+"active":true
+}
+UI / UX recommendations
+● Home dashboard: upcoming reminders for today (sorted), quick add pill or upload report.
+● Reports tab: list + filters + thumbnails (PDF pages or image preview). Tap -> viewer with
+OCRed text and ability to tag/share.
+● Medication tab: list meds -> tap to view schedules and pause/stop.
+● Reminder creation wizard: friendly UI with presets (daily, weekly, monthly) and advanced
+recurrence UI for custom intervals.
+● Settings: timezone (important), notification preferences, emergency contact, export data.
+Security, privacy & compliance
+● Encrypt data at rest (S3+DB). Use server-side KMS-managed keys.
+● Encrypt PII / sensitive fields in DB (e.g., SHA or AES).
+● Transport: TLS for all network communication.
+● Authentication: secure password hashing (bcrypt/argon2), session expiry, refresh tokens.
+● Access controls: user data isolation (row-level).
+● Audit logs: track access/edits to medical records.
+● Compliance: if you plan to operate in HIPAA-covered regions, design for HIPAA (BAA
+with cloud provider, logging, breach policies). In India, follow local privacy guidance and
+best practices.
+● Data export & delete: allow users to export all data and request deletion.
+OCR & auto-tagging
+● Run OCR on uploaded PDFs/images and extract structured info:
+○ For prescriptions: detect medication names, dosages, frequency.
+○ For diagnostics: pick provider, date, key lab values.
+● Start with a semi-automated workflow: OCR -> show parsed fields for user confirmation
+to avoid errors.
+Offline-first considerations
+● For medication reminders, schedule local notifications on-device so reminders fire even
+without network.
+● Sync when online: reconcile local and server changes (use a last-modified timestamp +
+conflict resolution).
+Analytics & monitoring
+● Track reminder delivery & user-snooze behaviour to fine-tune timing.
+● Use Sentry/Datadog for crashes and metrics. Ensure logs do NOT contain PHI.
+Advanced / nice-to-have features
+● Family sharing / caregiver access with fine-grained permissions.
+● Smart reminders that adapt times to when user actually marks as taken.
+● Medication adherence dashboard + export for doctors.
+● Integrations: labs (if they have APIs), Apple Health / Google Fit sync.
+● Voice input for quick add (speech→text for prescriptions).
+● Smart scanning: auto-create pill schedules from prescription image.
+Example: simple reminder generation
+function (pseudo-JS)
+js
+CopyEdit
+// input: pillSchedule {recurrence_rule, timezone, start_date,
+end_date}
+function getNextOccurrences(schedule, afterDateUtc) {
+// use rrule library in JS with tz support
+// compute next N occurrences (e.g., next 7) and return as UTC
+datetimes
+}
+For local notifications, convert scheduled times to device local time and call OS scheduler.
+Operational checklist before launch
+● Create privacy policy + terms and get legal review.
+● Secure push certs and KMS keys.
+● Pen-test and vulnerability scan.
+● User testing for reminder UX (snooze, mark as taken).
+● Backup strategy & disaster recovery.
+
+</p>
