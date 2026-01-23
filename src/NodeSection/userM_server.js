@@ -101,7 +101,6 @@ net.post('/login', async (req, res) => {
    
      res.json({
       token , user:{id : useUser.user_id , name : useUser.user_name, age:useUser.user_age , gender :useUser.user_gender},
-      id : useUser.user_id , name : useUser.user_name, age:useUser.user_age , gender :useUser.user_gender,
       
     
     });
