@@ -9,7 +9,7 @@ import jwt from 'jsonwebtoken';
 const net = express();
 net.use(bodyParser.json());
 
-const allowedOrigins = ["https://personalmedassist-abdul.netlify.app" , 'http://localhost:5173' , 'https://personal-medical-assistance-abdul.onrender.com'];
+const allowedOrigins = [  "https://personalmedassist-abdul.netlify.app" , "http://localhost:5173" , "https://personal-medical-assistance-abdul.onrender.com" ,"https://medassistance-tecrcopentabdul.netlify.app/"];
 
 net.use(cors({
   origin: function(origin , callback){
@@ -48,7 +48,7 @@ q.query(`
   )
 `);
 
-// REGISTER
+
 net.post('/register', async (req, res) => {
   const { userName, userAge, userGender, userPassword } = req.body;
   const userIdGen = uuidv4();
@@ -73,7 +73,7 @@ net.post('/register', async (req, res) => {
   
 });
 
-// LOGIN
+
 net.post('/login', async (req, res) => {
   try {
     const { userName, userPassword } = req.body;
@@ -111,7 +111,7 @@ net.post('/login', async (req, res) => {
 });
 
 net.listen(1230, () => {
-  console.log(`Server running on http://localhost:1230`);
-  console.log(`Register on http://localhost:1230/register ...`);
-  console.log(`Login on http://localhost:1230/login ...`);
+  console.log(`Server running on https://personal-medical-assistance-abdul.onrender.com`);
+  console.log(`Register on https://personal-medical-assistance-abdul.onrender.com/register ...`);
+  console.log(`Login on https://personal-medical-assistance-abdul.onrender.com/login ...`);
 });

@@ -1,5 +1,9 @@
-import {useState} from 'react';
+import {useState , useEffect  }  from 'react';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 import './index.css'
+
+
 
 
 import {BrowserRouter as Router , Routes , Route} from 'react-router-dom';
@@ -12,54 +16,71 @@ import BodyComp from './components/BodyComp.jsx';
 import MedSection from './contentSection/MedSection.jsx';
 import ReportSection from './contentSection/ReportSection.jsx';
 import DoctorField from './contentSection/DoctorField.jsx';
-
+import NotifySection from './components/NotifySection.jsx';
 
 
 
 function App() {
+  useEffect(() => {
+    AOS.init({
+      duration:1000,
+      once:false,
+      offset:150,
+    })
+  } , [])
  
+const bgColors = [`bg-gradient-to-bl to-green-800 from-purple-600` , `bg-gradient-to-br to-amber-800 from-blue-600` , ` bg-gradient-to-br to-stone-800 from-cyan-600` ];
+  
+  const [cssIndex , setCssIndex ] = useState(0);
+
+  useEffect(() => {
+    const intervalBG = setInterval(() => {
+
+      setCssIndex((prevIndex) => (prevIndex + 1) % bgColors.length)
+    } , 10000);
+    
+    return () => clearInterval(intervalBG);
+  } , []);
 
   
-  var [cssL , setCSS ] = useState('bg-cover bg-gradient-to-br   to-green-300 from-blue-600 h-full text-stone-200`')
+    const colorBG=bgColors[cssIndex] ;
 
-  setTimeout(() => {setCSS('bg-cover bg-gradient-to-bl   to-green-500 from-blue-800 h-full text-stone-200`') 
-
-    setTimeout(() => {setCSS('bg-cover bg-gradient-to-tl   to-green-500 from-blue-900 h-full text-stone-200`')} , 10000)
-  } , 5000)
-
-    const cssClass=cssL ;
-
+   
   
-
-cssClass;
   return (
     <>
-      <div className={`transition-colors duration-900 ease-in-out ${cssClass}`}>
-        <TopSection />
+      <div className={` w-full md:w-screen lg:w-full h-full text-stone-200  ${colorBG} transition-colors duration-1000 ease-in-out `} >
+     
         
         <Router>
+          <TopSection />
+           
             <Routes>
-              <Route path='/' element={<AuthSec/>}/>
-                <Route path="/login" element={<Login/>}/>
+              <Route path="/" element={<AuthSec/>}/>
+                <Route path="/login"  element={<Login/>}/>
                 <Route path="/register" element={<Register/>}/>
                 <Route path="/body" element={<BodyComp/>}/>
                 <Route path="/medicine" element={<MedSection/>}/>
                 <Route path="/report" element={<ReportSection/>}/>
                 <Route path="/doctor" element={<DoctorField/>}/>
+                
             </Routes>
         </Router>
-        <footer className='bg-gradient-to-br from-purple-800/60 to-stone-800/80 p-2 text-center text-xl flex flex-col justify-center items-center'>
+
+        <footer className='bg-gradient-to-br  from-purple-800/60 to-stone-800/80 p-2 text-center text-xl flex flex-col justify-center items-center'>
          <h1><strong>ABDUL</strong>&copy;Personal Med Assistance&trade;</h1>
          
          <div className='bg-emerald-900/20 w-fit p-10  rounded'>
 <span className='underline'>MedCOPENT </span>&trade;
-    <div className='bg-slate-600/50 w-fit p-2'><strong>ABDUL HAADHI | NARASHIMA RAJA | MOHAMED HARUN| MOHAMED RAZIM</strong></div>
+    <div className='bg-slate-600/50 w-fit p-2'><strong><a href='https://abdulhaadhifolio.netlify.app' className='hover:text-amber-300'>ABDUL HAADHI</a> | NARASHIMA RAJA | MOHAMED HARUN| MOHAMED RAZIM</strong></div>
 
     
         </div>
    <h1 className='font-thin'>web application in devolopment..!</h1>
         </footer>
+        
       </div>
+      
       
     </>
   )

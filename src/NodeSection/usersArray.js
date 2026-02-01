@@ -2,12 +2,14 @@
 
 
 const dat = localStorage.getItem('data');
+const userDV = JSON.parse(dat) || "{}" || null ;
+console.log(userDV);
+const Uname = userDV=== null   ? '.' : userDV.name;
+const Uage = userDV === null ? '.' : userDV.age;
+const Ugender= userDV === null ? '.' : userDV.gender;
 
-const userDV = JSON.parse(dat);
 
-const Uname = userDV.name === null ? '' : userDV.name;
-const Uage = userDV.age === null ? '' : userDV.age;
-const Ugender= userDV.gender === null ? '' : userDV.gender;
+
 
 
 export const userMedDV = {username:Uname ,usergender:Ugender , userage:Uage }
