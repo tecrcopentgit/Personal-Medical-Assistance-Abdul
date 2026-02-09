@@ -48,6 +48,17 @@ q.query(`
   )
 `);
 
+q.query(`
+  CREATE TABLE IF NOT EXISIS userMedicineSecTable(
+  user_id UUID PRIMARY KEY , 
+  medicine_name VARCHAR(50) NOT NULL,
+  medicine_type VARCHAR(50) NOT NULL,
+  medicine_dosage INT NOT NULL , 
+  medicine_date DATE NOT NULL, 
+  medicine_time TIME NOT NULL
+  )
+  `);
+
 
 net.post('/register', async (req, res) => {
   const { userName, userAge, userGender, userPassword } = req.body;
@@ -94,6 +105,8 @@ net.post('/login', async (req, res) => {
     if (!valid) {
     
       return res.status(401).json({ error: 'Invalid password' });
+      
+
     }
 
     const token = jwt.sign({ id: useUser.user_id }, 'secretkey', { expiresIn: '1h' });
@@ -109,6 +122,26 @@ net.post('/login', async (req, res) => {
     res.status(401).json({ error: 'Error Logging In..' });
   }
 });
+
+net.post('medicine/', async(req , res) => {
+  
+  const result = await q.query(
+    "SELECT * FROM userMedTable WHERE user_name=$1",
+    [userName]
+  );
+  const useUser = result.rows[0];
+  try {
+      const {medicineName , medicineType , medicineDosage , medicineDate , medicineTime } = req.body;
+
+      await q.query(`
+        INSERT INTO userMedicineSecTable(user_id , medicine_name , medicine_type , medicine_dosage , medicine_date , medicine_time)
+        VALUES($1,$2,$3,$4,$5,$6)` , [useUser.user_id , medicineName , medicineType , medicineDosage , medicineDate , medicineTime ])
+
+  }
+  catch(err){
+alert(err);
+  }
+})
 
 net.listen(1230, () => {
   console.log(`Server running on https://personal-medical-assistance-abdul.onrender.com`);

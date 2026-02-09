@@ -5,7 +5,7 @@ export default function FolioCompSec(){
     
     return(
     <>
-    <div className='bg-red-400/60 rounded m-2 p-10'>
+    <div className=' bg-rose-900/80 rounded m-2 p-10'>
 
 
 <div className='bg-orange-500/40 w-fit m-3 p-2 border-2  border-amber-500/50 rounded '>

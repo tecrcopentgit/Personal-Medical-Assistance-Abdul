@@ -1,5 +1,6 @@
 
 import {useState} from 'react';
+import {Stethoscope} from 'lucide-react';
 
 import appLogo from '../assets/logo/abh_med_app_logo.png';
 
@@ -34,11 +35,11 @@ export default function TopSection(){
       
         <>
         
-        <div className=" bg-gradient-to-br from-teal-300/50 to-emerald-500/50 flex flex-rowbg-red-900/50 p-5 text-stone-200  justify-between">
+        <div className=" bg-gradient-to-tr from-cyan-900 to-purple-900 flex flex-rowbg-red-900/50 p-5 text-stone-200  justify-between">
          
           <div className=' font-body sm:text-5xl flex gap-5'> 
             <div ><img src={appLogo} className='sm:h-8 sm:w-8 md:h-10 md:w-10 lg:h-16 lg:w-16 h-10 bg-green-300/50 hover:bg-red-600/20 rounded-full'/></div>
-            <div className='mt-2'data-aos='fade-in' ><h1>Abdul <strong>MedCOPENT</strong><span>&trade;</span></h1></div>
+            <div className='mt-2'data-aos='fade-in' ><h1 className='flex'><Stethoscope data-aos='slide-left'/><strong>MedCOPENT</strong><span>&trade;</span></h1></div>
             
           
           

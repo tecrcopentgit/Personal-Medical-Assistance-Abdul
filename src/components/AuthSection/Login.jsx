@@ -64,8 +64,9 @@ async function handleSubmit(e){
 
 
         if(data.error){
-            alert(data.error);
-            
+            alert(data.error +' ...click OK to try again..!');
+            window.location.reload();
+            localStorage.removeItem('data');
             dataUser = [];
            
         }

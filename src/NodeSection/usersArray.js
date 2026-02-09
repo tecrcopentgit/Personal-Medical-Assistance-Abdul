@@ -18,3 +18,7 @@ export const userMedDV = {username:Uname ,usergender:Ugender , userage:Uage }
 export const userMed = {userName:'', userAge:'', userGender:'', userPassword:''};
 
 
+export const userMedicine =[];
+console.log(userMedicine.length);
+export const userReport = [];
+export const userDoctor = [];

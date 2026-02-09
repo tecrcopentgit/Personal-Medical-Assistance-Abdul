@@ -1,7 +1,8 @@
 import {useState , useRef , useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { ToolCaseIcon} from 'lucide-react';
+import { ToolCaseIcon  } from 'lucide-react';
+import { XIcon } from 'lucide-react';
 export default function NavigationSection(){
     const navigate = useNavigate();
     const navSection = useRef(null);
@@ -39,7 +40,7 @@ export default function NavigationSection(){
             
         else{
             setNavShow('block');
-            setNavButtonStyle(`bg-red-700/50 rounded-full border-2 border-black `);
+            setNavButtonStyle(`bg-red-700/50 rounded-full  `);
 
         }
         
@@ -64,8 +65,8 @@ export default function NavigationSection(){
 
 </div>
       <div className='bg-black/80 w-full text-center p-2'>
-    <button  className={`${navButtonStyle} h-10  w-10 items-center font-bold py-2 px-2  hover:bg-orange-950 hover:border-2 hover:border-amber-700`} onClick={NavCloseFunction}  >
-        {navShow === 'hidden'? <ToolCaseIcon color='green' className='hover:text-gray-600'/> : 'X'}</button>
+    <button  className={`${navButtonStyle} h-10  w-10 items-center font-bold py-2 px-2  hover:bg-orange-950 bg-red-900 hover:rounded-full`} onClick={NavCloseFunction}  >
+        {navShow === 'hidden'? <ToolCaseIcon color='green' className='hover:text-gray-600'/> : <XIcon/>}</button>
     </div>
 
 
