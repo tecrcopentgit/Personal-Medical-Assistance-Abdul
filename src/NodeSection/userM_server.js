@@ -156,4 +156,5 @@ net.listen(1230, () => {
   console.log(`Server running on https://personal-medical-assistance-abdul.onrender.com`);
   console.log(`Register on https://personal-medical-assistance-abdul.onrender.com/register ...`);
   console.log(`Login on https://personal-medical-assistance-abdul.onrender.com/login ...`);
+  console.log(`https://personal-medical-assistance-abdul.onrender.com/users`)
 });
