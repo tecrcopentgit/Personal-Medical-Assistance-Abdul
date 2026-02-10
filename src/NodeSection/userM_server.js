@@ -49,7 +49,7 @@ q.query(`
 `);
 
 q.query(`
-  CREATE TABLE IF NOT EXISIS userMedicineSecTable(
+  CREATE TABLE IF NOT EXISTS userMedicineSecTable(
   user_id UUID PRIMARY KEY , 
   medicine_name VARCHAR(50) NOT NULL,
   medicine_type VARCHAR(50) NOT NULL,
@@ -90,7 +90,7 @@ net.post('/login', async (req, res) => {
     const { userName, userPassword } = req.body;
 
     const result = await q.query(
-      "SELECT * FROM userMedTable WHERE user_name=$1",
+      " SELECT * FROM userMedTable WHERE user_name=$1 ",
       [userName]
     );
 
@@ -142,6 +142,15 @@ net.post('medicine/', async(req , res) => {
 alert(err);
   }
 })
+
+net.get("/users", async (req, res) => {
+  try {
+    const result = await q.query("SELECT user_name FROM userMedTable");
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: "Error fetching users" });
+  }
+});
 
 net.listen(1230, () => {
   console.log(`Server running on https://personal-medical-assistance-abdul.onrender.com`);
