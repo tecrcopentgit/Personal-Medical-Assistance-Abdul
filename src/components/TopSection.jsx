@@ -12,7 +12,7 @@ import { LogOut ,RefreshCcw } from 'lucide-react';
 
 export const notifyView = 'block';
 export const show = (userMedDV.username !== undefined) ? 'block' : 'hidden';
-export const buttonStyle = ` hover:text-red-900 md:hover:border-2 border-orange-700 md:bg-amber-600/40 sm:h-8 sm:w-8 md:h-10 md:w-10 lg:h-16 lg:w-16 h-10  rounded-full flex items-center justify-center md:hover:bg-slate-300`
+export const buttonStyle = ` hover:text-red-900 md:hover:border-2 border-orange-700 md:bg-amber-600/40 sm:h-8 sm:w-8 md:h-10 md:w-10 lg:h-16 lg:w-16 h-10  rounded-full flex items-center justify-center md:hover:bg-slate-300 shadow-xl shadow-slate-900`
 export default function TopSection(){
 
  const [logState , setLogState ] = useState();
@@ -35,7 +35,7 @@ export default function TopSection(){
       
         <>
         
-        <div className=" bg-gradient-to-tr from-cyan-900 to-purple-900 flex flex-rowbg-red-900/50 p-5 text-stone-200  justify-between">
+        <div className=" bg-gradient-to-tr from-cyan-900 to-purple-900 flex flex-rowbg-red-900/50 p-5 text-stone-200 shadow-xl shadow-purple-950 justify-between">
          
           <div className=' font-body sm:text-5xl flex gap-5'> 
             <div ><img src={appLogo} className='sm:h-8 sm:w-8 md:h-10 md:w-10 lg:h-16 lg:w-16 h-10 bg-green-300/50 hover:bg-red-600/20 rounded-full'/></div>

@@ -11,10 +11,10 @@ export default function FooterSection(){
          <h1><strong>ABDUL</strong>&copy;Personal Med Assistance&trade;</h1>
          </div>
 
- <div className=' text-xl p-2 flex flex-col' data-aos='zoom-out'>
+<a href='https://medassistance-tecrcopentabdul.netlify.app'><div className=' text-xl p-2 flex flex-col' data-aos='zoom-out'>
        <img src={appfullLogo} className='h-40 w-40 rounded'/>
        <p>MedCOPENT 2026</p>
-         </div>
+         </div></a>
 
          <div data-aos='zoom-in'>
  <div className=' p-10  rounded '>
