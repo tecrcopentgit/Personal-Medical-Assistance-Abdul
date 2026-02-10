@@ -10,7 +10,7 @@ export default function FolioCompSec(){
           const res = await fetch('https://personal-medical-assistance-abdul.onrender.com/users');
           const data = await res.json();
           setUsers(data);
-          if (data !== null){alert(data)}
+          if (data !== null){alert (JSON.stringify(data))}
         }
         catch(e){
     
@@ -38,9 +38,7 @@ export default function FolioCompSec(){
         
         </div>
         <ul>
-        {users.map(u => (
-          <li key={u.user_name}></li>
-        ))}
+      
       </ul>
     </div>
     

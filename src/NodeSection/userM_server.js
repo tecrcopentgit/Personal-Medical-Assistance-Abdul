@@ -9,7 +9,7 @@ import jwt from 'jsonwebtoken';
 const net = express();
 net.use(bodyParser.json());
 
-const allowedOrigins = [  "https://personalmedassist-abdul.netlify.app" ,"https://medassistance-tecrcopentabdul.netlify.app" ,"http://localhost:5173" , "https://personal-medical-assistance-abdul.onrender.com" ];
+const allowedOrigins = [  "https://personalmedassist-abdul.netlify.app" ,"https://medassistance-tecrcopentabdul.netlify.app" ,"http://localhost:5173","http://localhost:5174" , "https://personal-medical-assistance-abdul.onrender.com" ];
 
 net.use(cors({
   origin: function(origin , callback){
