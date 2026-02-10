@@ -1,7 +1,27 @@
 import { userMedDV } from "../NodeSection/usersArray"
+
+import {useState , useEffect } from 'react';
 export default function FolioCompSec(){
-
-
+    const [users, setUsers] = useState([]);
+    useEffect ( () => {
+        const  fetchUsers = async () => {
+    
+     try{
+          const res = await fetch('https://personal-medical-assistance-abdul.onrender.com/users');
+          const data = await res.json();
+          setUsers(data);
+          if (data !== null){alert(data)}
+        }
+        catch(e){
+    
+        }
+        }
+    
+       
+    console.log(users);
+     fetchUsers();
+      } , [] )
+    
     
     return(
     <>
@@ -17,7 +37,11 @@ export default function FolioCompSec(){
        
         
         </div>
-
+        <ul>
+        {users.map(u => (
+          <li key={u.user_name}></li>
+        ))}
+      </ul>
     </div>
     
 
