@@ -12,7 +12,11 @@ import Login from './Login.jsx';
 
 
 import {userMed} from '../../NodeSection/usersArray.js';
-export const inputStyle = ' p-4 rounded lg:w-full md:font-bold bg-gradient-to-l hover:text-amber-100 from-purple-900/80 to-blue-900 shadow-xl border-xl border-amber-900 hover:bg-black'
+export const inputStyle = ` p-4 rounded w-full md:font-bold 
+bg-gradient-to-l hover:text-amber-100
+ from-purple-900/80 to-blue-900 shadow-xl shadow-black border-xl 
+ border-amber-900 hover:bg-black  `
+
 export default function Register(){
     const [loadState , setLoadState] = useState(<Loading show='hidden'  section='' />)
     const navigate = useNavigate();
@@ -67,13 +71,15 @@ const res = await fetch(`https://personal-medical-assistance-abdul.onrender.com/
     return(
         <>
        {loadState}
-        <div className='bg-stone-500/50 text-stone-950 rounded text-center bg-cover  grid grid-col-1 md:p-4 m-2 md:m-2 text-xl ' data-aos='fade-in'>
-             <div className=' rounded  lg:text-xl text-center lg:mx-96 mx-10  md:mx-6  bg-rose-900/30 flex flex-col items-center mt-2' data-aos='slide-right'>
-             <h1><img className='lg:h-20 lg:w-20 lg:mx-64 mx-20   h-10 w-10' src={appLogo}/></h1>
-             <h1>User Registration</h1></div>
+        <div className='bg-gradient-to-tl from-black to-teal text-stone-200 rounded text-center bg-cover  grid grid-col-1 md:p-4 m-2 md:m-2 text-xl ' data-aos='fade-in'>
+             
              
             
-           <form onSubmit ={handleSubmit} className=' p-5 grid grid-rows-1'>
+           <form onSubmit ={handleSubmit} className=' p-5 flex flex-col items-center'>
+            
+            <div className=' rounded  lg:text-xl text-center lg:mx-96 mx-10  md:mx-6  bg-rose-900/30 flex flex-col items-center mt-2' data-aos='slide-right'>
+             <h1><img className='lg:h-20 lg:w-20 lg:mx-64 mx-20   h-10 w-10' src={appLogo}/></h1>
+             <h1>User Registration</h1></div>
         <span>Name:</span>
         <input placeholder='Enter your Name'  type='text' name='userName'onChange={handleInput} value ={userForm.userName} className={inputStyle } required  />
 

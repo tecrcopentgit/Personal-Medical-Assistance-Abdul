@@ -99,12 +99,13 @@ async function handleSubmit(e){
         <>
             <Loading  show={loadState.show}  section={loadState.section} />
      
-        <div className='bg-stone-500/50 text-stone-950 rounded text-center bg-cover  grid grid-col-1 md:p-4 m-2 md:m-2 text-xl' data-aos='fade-in'>
-        <div className=' rounded  lg:text-xl text-center lg:mx-96 mx-10  md:mx-6  bg-rose-900/30 flex flex-col items-center' data-aos='slide-right'>
-        <h1><img className='lg:h-20 lg:w-20 lg:mx-64 mx-20   h-10 w-10' src={appLogo}/></h1>
-        <h1>User Login</h1></div>
+        <div className='text-stone-100 bg-gradient-to-br from-blue-500-600 to-green-800 rounded text-center bg-cover m-3   text-xl ' data-aos='fade-in'>
         
-        <form onSubmit={handleSubmit} className=' p-5 grid grid-rows-1 ' >
+        
+        <form onSubmit={handleSubmit} className=' rounded-b-xl p-5 flex flex-col gap-5 items-center ' >
+        <div className=' rounded   lg:text-xl text-center  bg-rose-900 w-full flex flex-col items-center shadow-xl' data-aos='fade-in'>
+        <h1><img className='lg:h-20 lg:w-20 lg:mx-64 mx-20  flex h-10 w-10' src={appLogo}/></h1>
+        <h1 className=' font-bold'>User Login</h1></div>
 
            <span>User Name</span>
        <input placeholder='Enter a registered user name' name='userName' type='text' value={loginForm.userName} onChange={handleInput} className={inputStyle} required/>

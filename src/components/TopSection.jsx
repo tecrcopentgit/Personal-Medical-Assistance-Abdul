@@ -12,7 +12,12 @@ import { LogOut ,RefreshCcw } from 'lucide-react';
 
 export const notifyView = 'block';
 export const show = (userMedDV.username !== undefined) ? 'block' : 'hidden';
-export const buttonStyle = ` hover:text-red-900 md:hover:border-2 border-orange-700 md:bg-amber-600/40 sm:h-8 sm:w-8 md:h-10 md:w-10 lg:h-16 lg:w-16 h-10  rounded-full flex items-center justify-center md:hover:bg-slate-300 shadow-xl shadow-slate-900`
+
+export const buttonStyle = ` hover:text-red-900 md:hover:border-2 border-orange-700
+ md:bg-amber-600/40 sm:h-8 sm:w-8 md:h-10 md:w-10 lg:h-16 lg:w-16 h-10  rounded-full
+  flex items-center justify-center md:hover:bg-slate-300 md:shadow-xl shadow-slate-900`;
+
+
 export default function TopSection(){
 
  const [logState , setLogState ] = useState();

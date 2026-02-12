@@ -1,12 +1,33 @@
 
 import { inputStyle } from "../components/AuthSection/Register";
 import { buttonStyle } from "../components/TopSection";
+import { userMedicine } from "../NodeSection/usersArray";
 export default function MedComponents(){
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try{
+             const res = await fetch('https://personal-medical-assistance-abdul.onrender.com/register' , {method:'POST' , 
+             header:'Content-Type:application/json' , 
+             body:JSON.stringify(userMedicine)});
+             const result = await res.json();
+        }
+        catch(e){
+            alert(e);
+        }
+
+    }
+
+
+    const handleInput = () => {
+
+    }
 
 
     return <>
     <div data-aos='slide-up'>
-        <form className='flex flex-col gap-3  p-10 items-center text-gray-950 font-heading '>
+        <form className='flex flex-col gap-3  p-10 items-center text-gray-950 font-heading ' onSubmit={handleSubmit}>
             <span>Medicine Name</span><input name='medicineName' type='text' className={inputStyle} required/>
             <span>Type</span><select className ={`text-slate-950 ${inputStyle}`} required><option></option>
            <option>Tablet</option>

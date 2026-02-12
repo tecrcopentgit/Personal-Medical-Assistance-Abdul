@@ -50,7 +50,7 @@ q.query(`
 
 q.query(`
   CREATE TABLE IF NOT EXISTS userMedicineSecTable(
-  user_id UUID PRIMARY KEY , 
+  user_id UUID REFERENCES userMedTable(user_id) ON DELETE CASCADE, 
   medicine_name VARCHAR(50) NOT NULL,
   medicine_type VARCHAR(50) NOT NULL,
   medicine_dosage INT NOT NULL , 
@@ -99,7 +99,8 @@ net.post('/login', async (req, res) => {
     }
 
     const useUser = result.rows[0];
-    console.log(useUser);
+    
+    
     const valid = await bcrypt.compare(userPassword, useUser.user_password);
 
     if (!valid) {
@@ -126,8 +127,8 @@ net.post('/login', async (req, res) => {
 net.post('medicine/', async(req , res) => {
   
   const result = await q.query(
-    "SELECT * FROM userMedTable WHERE user_name=$1",
-    [userName]
+    "SELECT * FROM userMedTable WHERE user_id=$1",
+    [useUser.user_id]
   );
   const useUser = result.rows[0];
   try {
